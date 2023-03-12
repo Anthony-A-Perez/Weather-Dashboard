@@ -3,11 +3,15 @@ var fetchButton = document.getElementById('fetch-btn');
 var cityInput = document.getElementById('city-input');
 
 
-function getApi(cityName) {
+function getApi(reSearch) {
 
+    console.log("reSearch: ", typeof reSearch, reSearch);
 
+    var cityName = cityInput.value;
+    if (typeof reSearch === 'string') {
+        cityName = reSearch
 
-    var cityName = cityInput.value
+    };
     var latLon = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityName + '&limit=1&appid=' + apiKey;
     // console.log(cityName);
 
@@ -98,26 +102,29 @@ function getApi(cityName) {
                     var ul = document.getElementById('recent');
                     var recentInput = localStorage.getItem('city-input')
                     var list = document.createElement('li');
-                    
+
                     list.addEventListener('click', function (e) {
+                        event.stopPropagation()
                         var reSearch = e.target.innerText;
                         latLon.replace(cityName, reSearch);
                         if (cityName = " ") {
-                            getApi()
-                    
+                            console.log(reSearch);
+                            getApi(reSearch)
+
+
                         }
                     });
-                    
-                    
-                    
-                    
+
+
+
+
                     list.setAttribute('id', 'func')
-                    list.innerText = cityInput.value.toUpperCase();
+                    list.innerText = cityName.toUpperCase();
                     ul.appendChild(list);
                     localStorage.setItem('city-input', cityName);
                     cityInput.value = '';
-                    
-                    
+
+
 
 
                     fetch(requestFore)
