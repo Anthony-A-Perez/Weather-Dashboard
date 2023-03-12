@@ -3,10 +3,14 @@ var fetchButton = document.getElementById('fetch-btn');
 var cityInput = document.getElementById('city-input');
 
 
-function getApi() {
+function getApi(cityName) {
+
+
+
     var cityName = cityInput.value
     var latLon = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityName + '&limit=1&appid=' + apiKey;
     // console.log(cityName);
+
 
     fetch(latLon)
         .then(function (response) {
@@ -14,6 +18,8 @@ function getApi() {
         })
         .then(function (data) {
             // console.log(data[0].lon);
+
+
 
             var lat = data[0].lat;
             var lon = data[0].lon;
@@ -88,6 +94,32 @@ function getApi() {
                     var date4 = document.getElementById("date-4");
                     var date = [date0, date1, date2, date3, date4];
 
+
+                    var ul = document.getElementById('recent');
+                    var recentInput = localStorage.getItem('city-input')
+                    var list = document.createElement('li');
+                    
+                    list.addEventListener('click', function (e) {
+                        var reSearch = e.target.innerText;
+                        latLon.replace(cityName, reSearch);
+                        if (cityName = " ") {
+                            getApi()
+                    
+                        }
+                    });
+                    
+                    
+                    
+                    
+                    list.setAttribute('id', 'func')
+                    list.innerText = cityInput.value.toUpperCase();
+                    ul.appendChild(list);
+                    localStorage.setItem('city-input', cityName);
+                    cityInput.value = '';
+                    
+                    
+
+
                     fetch(requestFore)
                         .then(function (response) {
                             return response.json();
@@ -113,6 +145,9 @@ function getApi() {
                                 icon[i].setAttribute('src', dayIconUrl);
                                 date[i].innerText = dayDate;
 
+
+
+
                             }
 
                         })
@@ -125,21 +160,6 @@ function getApi() {
 
 fetchButton.addEventListener('click', getApi);
 
-var ul = document.getElementById('recent');
-var recentInput = localStorage.getItem('city-input')
-fetchButton.addEventListener('click', function () {
-    // var a = document.createElement('a');
-    // a.setAttribute('href', '#');
-    var list = document.createElement('li');
-    list.setAttribute('onclick', 'getApi()')
-    list.setAttribute('id', 'func')
-    list.innerText = cityInput.value.toUpperCase();
-    ul.appendChild(list);
-    localStorage.setItem('city-input', cityInput.value);
-    cityInput.value = '';
-
-    
-})
 
 
 
