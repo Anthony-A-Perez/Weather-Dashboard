@@ -11,7 +11,7 @@ function getApi(reSearch) {
         cityName = reSearch
 
     };
-    var latLon = 'https://api.openweathermap.org/geo/1.0/direct?q=' + cityName + '&limit=1&appid=' + apiKey;
+    var latLon = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityName + '&limit=1&appid=' + apiKey;
     // console.log(cityName);
 
 
@@ -27,7 +27,7 @@ function getApi(reSearch) {
             var lat = data[0].lat;
             var lon = data[0].lon;
             // console.log(lat, lon);
-            var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey;
+            var requestUrl = 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey;
 
             fetch(requestUrl)
                 .then(function (response) {
@@ -60,7 +60,7 @@ function getApi(reSearch) {
                     city.innerText = currentCity;
                     iconImg.setAttribute('src', iconUrl);
 
-                    var requestFore = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey;
+                    var requestFore = 'http://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey;
 
                     var tem0 = document.getElementById("tem-0");
                     var tem1 = document.getElementById("tem-1");
