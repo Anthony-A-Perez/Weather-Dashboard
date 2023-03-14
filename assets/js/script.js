@@ -2,10 +2,9 @@ const apiKey = "8b522113569ab0de39504741cf85d7fd";
 var fetchButton = document.getElementById('fetch-btn');
 var cityInput = document.getElementById('city-input');
 
-
 function getApi(reSearch) {
 
-    console.log("reSearch: ", typeof reSearch, reSearch);
+    //console.log("reSearch: ", typeof reSearch, reSearch);
 
     var cityName = cityInput.value;
     if (typeof reSearch === 'string') {
@@ -100,32 +99,25 @@ function getApi(reSearch) {
 
 
                     var ul = document.getElementById('recent');
-                    var recentInput = localStorage.getItem('city-input')
                     var list = document.createElement('li');
 
                     list.addEventListener('click', function (e) {
-                        event.stopPropagation()
                         var reSearch = e.target.innerText;
                         latLon.replace(cityName, reSearch);
                         if (cityName = " ") {
                             console.log(reSearch);
                             getApi(reSearch)
-
-
-                        }
+                        };
+                        if (list.innerText === list.innerText) {
+                        list.remove();
+                        };
                     });
 
-
-
-
-                    list.setAttribute('id', 'func')
+                    list.setAttribute('class', 'func')
                     list.innerText = cityName.toUpperCase();
                     ul.appendChild(list);
                     localStorage.setItem('city-input', cityName);
                     cityInput.value = '';
-
-
-
 
                     fetch(requestFore)
                         .then(function (response) {

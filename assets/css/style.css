@@ -1,4 +1,4 @@
-#func:hover {
+.func:hover {
     color:red;
     cursor: pointer;
 }
