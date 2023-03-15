@@ -1,66 +1,63 @@
 const apiKey = "8b522113569ab0de39504741cf85d7fd";
 var fetchButton = document.getElementById('fetch-btn');
 var cityInput = document.getElementById('city-input');
-
+// the parameter reSearch is used as a string or an object depending on if the city ser=arch is current or recent city searched
 function getApi(reSearch) {
 
-    //console.log("reSearch: ", typeof reSearch, reSearch);
+
 
     var cityName = cityInput.value;
+    // this 'if' statement distinguishes weather or not the variable is a string or an object
     if (typeof reSearch === 'string') {
         cityName = reSearch
 
     };
+    // city latitude and longitude are called
     var latLon = 'https://api.openweathermap.org/geo/1.0/direct?q=' + cityName + '&limit=1&appid=' + apiKey;
-    // console.log(cityName);
-
 
     fetch(latLon)
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
-            // console.log(data[0].lon);
 
-
+            //latitude and longitude are saved as variables
 
             var lat = data[0].lat;
             var lon = data[0].lon;
-            // console.log(lat, lon);
-            var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey;
 
+            var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey;
+            //current weather condition is called
             fetch(requestUrl)
                 .then(function (response) {
                     return response.json();
                 })
                 .then(function (data) {
-                    // console.log(data);
-                    // console.log(data.weather[0].icon)
 
+                    //variables capturing weather data are created
                     var currentCity = data.name;
                     var currentTemp = Math.round((data.main.temp - 273.15) * 1.8 + 32) + ' \u00B0F';
                     var currentCond = data.weather[0].description;
                     var currentWind = Math.round(data.wind.speed) + ' mph';
                     var weatherIcon = data.weather[0].icon;
                     var iconUrl = "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
-                    // console.log(iconUrl)
-                    // console.log(currentCond)
-                    // console.log(currentWind)
-                    // console.log(currentCity)
-
+                    //variables designating where the data will go into the html are created
                     var iconImg = document.querySelector('img');
                     var city = document.getElementById("city");
                     var temp = document.getElementById("temp");
                     var cond = document.getElementById("cond");
                     var wind = document.getElementById("wind");
-
+                    //The data is rendered to the web page
                     temp.innerText = currentTemp;
                     cond.innerText = currentCond;
                     wind.innerText = currentWind;
                     city.innerText = currentCity;
                     iconImg.setAttribute('src', iconUrl);
-
+                    //The 5 day forecast is called
                     var requestFore = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey;
+
+
+                    //variables designating where the data will go into the html are created
 
                     var tem0 = document.getElementById("tem-0");
                     var tem1 = document.getElementById("tem-1");
@@ -100,7 +97,7 @@ function getApi(reSearch) {
 
                     var ul = document.getElementById('recent');
                     var list = document.createElement('li');
-
+                    // this adds list items dynamically, the click function calls the function getApi, passing the parameter as reSearch as a string
                     list.addEventListener('click', function (e) {
                         var reSearch = e.target.innerText;
                         latLon.replace(cityName, reSearch);
@@ -109,7 +106,7 @@ function getApi(reSearch) {
                             getApi(reSearch)
                         };
                         if (list.innerText === list.innerText) {
-                        list.remove();
+                            list.remove();
                         };
                     });
 
@@ -118,7 +115,7 @@ function getApi(reSearch) {
                     ul.appendChild(list);
                     localStorage.setItem('city-input', cityName);
                     cityInput.value = '';
-
+                    //This calls the 5 day forecast data
                     fetch(requestFore)
                         .then(function (response) {
                             return response.json();
@@ -127,16 +124,16 @@ function getApi(reSearch) {
                             for (i = 0; i < 5; i++) {
                                 // console.log(data);
                                 // console.log(data.list[((i + 1) * 8) - 1].weather[0].icon);
-
+                                //these variables loop through the weather data that is furnished in 3 hour increments. The resulting data is represented in 24 hour increments
                                 var dayTemp = data.list[((i + 1) * 8) - 1].main.temp;
                                 var dayTempConv = 'Temp: ' + Math.round((dayTemp - 273.15) * 1.8 + 32) + "  \u00B0F";
-                                // console.log(dayTempConv);
+
                                 var dayWind = 'Wind: ' + Math.round(data.list[((i + 1) * 8) - 1].wind.speed) + ' mph';
                                 var dayHum = 'Humidity: ' + data.list[((i + 1) * 8) - 1].main.humidity + '%';
                                 var dayIcon = data.list[((i + 1) * 8) - 1].weather[0].icon;
                                 var dayIconUrl = "https://openweathermap.org/img/wn/" + dayIcon + "@2x.png";
                                 var dayDate = new Date((data.list[((i + 1) * 8) - 1].dt) * 1000).toLocaleDateString();
-                                // console.log(dayDate);
+
 
                                 tem[i].innerText = dayTempConv;
                                 win[i].innerText = dayWind;

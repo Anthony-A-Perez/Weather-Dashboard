@@ -1,3 +1,5 @@
+
+/* This styling is applied to the dynamically created recent cities list. The red text and pointer cursor should be recognized as 'click' indicators to return to the 5 day forecast and current weather for a recently searched city*/
 .func:hover {
     color:red;
     cursor: pointer;

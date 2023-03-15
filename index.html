@@ -20,7 +20,7 @@
   <div class="row">
     <div class="col-4 m-3">
       <h2>Search for a City</h2>
-
+<!-- Input field class is called to complete the api fetch -->
       <div class="input-group mb-3">
         <input id="city-input" type="text" class="form-control" placeholder="Enter City Name"
           aria-label="Enter City Name" aria-describedby="fetch-btn">
@@ -28,10 +28,12 @@
           <button id="fetch-btn" class="btn btn-outline-secondary" type="button">Go!</button>
         </div>
       </div>
+     <!-- this list is created dynamically from the search input-->
       <ul class="list-group" id="recent">
-        <!-- <li onclick="getApi()"></li> -->
+      
       </ul>
     </div>
+    <!-- This div holds the current weather conditions for the city entered into the input field-->
     <div id="current" class="row col-6 m-3 flex-fill">
       <h2 class>City: <span id="city"></span><img src='' style="width:75px"></h2>
       <div class="col-6">
@@ -44,6 +46,7 @@
 
       </div>
     </div>
+    <!-- this div displays the 5 day weather forecast for the city entered into the input field-->
     <div class="text-bg-info col-12 3-3 border border-primary text-center align-items-center">
       <h2>5-Day Forecast:</h2>
       <ul class="list-group list-group-horizontal-sm">
